@@ -1,14 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-            include 'modelos/Modelo.php';
-            $miModelo = new Modelo();
-            $miModelo->nuevaHectarea("José", "Arena");
-        ?>
-    </body>
-</html>
+<?php
+    include 'libs/tiny.php';
+    include 'modelos/Modelo.php';
+
+    $miModelo = new Modelo();
+    $miModelo->nuevaHectarea("José", "Arena");
+
+    ShowTemplate('index', array('modelo' => $miModelo));
+?>
