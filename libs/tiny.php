@@ -31,6 +31,13 @@ define("COMPONENT_RUN_DIR", 'components/');
 define("COMPONENT_TEMPLATE_DIR", 'template/components/');
 define("LAYOUT_FILE", TEMPLATE_DIR . 'layout.php');
 
+/**
+ *
+ * @param string $template Nombre de la vista a usar, sin la extención .php
+ * @param array $vars Arreglo con las variables que se quiere pasar a la vista. nombre => valor
+ * @param string $showLayout 
+ * @author Guillermo O. <Tordek> Freschi
+ */
 function ShowTemplate($template, $vars=null, $showLayout=true)
 {
     if($vars !== null) {
