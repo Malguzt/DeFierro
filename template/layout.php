@@ -10,7 +10,8 @@
         <div id="encabezado"><h1>De Fierro Online</h1></div>
         <div id="menuIzquierdo">
             <ul>
-                <li><a href="login.php">Login</a></li>
+                <li><a href="login.php">Entrar</a></li>
+                <li><a href="registro.php">Registrarse</a></li>
                 <li><a href="personaje.php">Personaje</a></li>
             </ul>
         </div>
