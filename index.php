@@ -1,6 +1,5 @@
 <?php
-    include 'libs/tiny.php';
-    include 'modelos/Modelo.php';
+    include 'libs/incluidor.php';
 
     ShowTemplate('index');
 ?>
