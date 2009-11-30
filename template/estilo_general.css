@@ -1,0 +1,99 @@
+/* 
+    Document   : estilo_general
+    Created on : 30/11/2009, 09:44:18
+    Author     : Lenscak José Francisco [Malguzt]
+    Description:
+        Plantilla de estilo general del proyecto De Fierro Online.
+*/
+
+
+
+/* Reset, no modificar *****************************************/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+body {
+	line-height: 1;
+	color: black;
+	background: white;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+/* Fin del Reset, modificar solo de aca para abajo ************************/
+
+root { 
+    display: block;
+}
+
+div#encabezado {
+    background-color: #6666ff;
+    font-style: italic;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 36px;
+    border-style: none;
+    border: 0;
+    margin: 0;
+    padding: 10px;
+}
+
+div#menuIzquierdo {
+    width: 20%;
+    float: left;
+    background-color: #6666ff;
+}
+
+div#areaPrincipal {
+    width: 75%;
+    float: left;
+}
+
+div#menuIzquierdo a{
+    color: #fff;
+    text-decoration: none;
+}
+
+div#menuIzquierdo a:hover{
+    text-decoration: underline;
+    font-style: italic;
+}
+
+div#menuIzquierdo ul{
+    margin:3px;
+}

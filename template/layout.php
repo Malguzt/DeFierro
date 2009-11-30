@@ -4,11 +4,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>De Fierro Online</title>
 
-        <link rel="STYLESHEET" type="text/css" href="estilo_general.css">
+        <link rel="STYLESHEET" type="text/css" href="template/estilo_general.css">
     </head>
     <body>
         <div id="encabezado"><h1>De Fierro Online</h1></div>
-        <div id="menuIzquierdo"></div>
-        <?php echo $tiny_content; ?>
+        <div id="menuIzquierdo">
+            <ul>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="personaje.php">Personaje</a></li>
+            </ul>
+        </div>
+        <div id="areaPrincipal">
+            <?php echo $tiny_content; ?>
+        </div>
     </body>
 </html>
