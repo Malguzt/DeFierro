@@ -23,7 +23,9 @@ class Usuario extends Modelo {
         $this->usuario = trim($usuario);
         $this->cambiarClave($clave);
         $this->email = $email;
+        $this->tabla = 'usuario';
     }
+
     /**
      * Crea el registro de un nuevo usuario, validando previamente los campos de la instancia.
      * @param PDO $conexion Objeto de conexión a la base de datos.
@@ -31,10 +33,15 @@ class Usuario extends Modelo {
      */
     function guardar($conexion) {
         if($this->validarUsuario($conexion)) {
-            $sentencia = $conexion->prepare('INSERT INTO usuario (usuario, clave, email) VALUES (?, ?, ?)');
-            return $sentencia->execute(array($this->usuario, $this->clave, $this->email));
+            $instancia = array(
+                'usuario' => $this->usuario,
+                'clave' => $this->clave,
+                'email' => $this->email
+            );
+            return parent::guardar($instancia, $conexion);
         }
         return False;
+
     }
 
     /**
@@ -46,15 +53,14 @@ class Usuario extends Modelo {
      */
     function validarNobreDeUsuario($conexion) {
         if($this->usuario != '') {
-            $sentencia = $conexion->preparate('SELECT usuario FROM usuario WHERE usuario.usuario LIKE ?');
+            $sentencia = $conexion->prepare('SELECT usuario FROM usuario WHERE usuario.usuario LIKE ?');
             $sentencia->execute(array($this->usuario));
             $usuario = $sentencia->fetch();
-            var_dump($usuario);
             if(empty($usuario)) {
                 return True; //El usuario es valido.
             }
         }
-        return False; //El usuario no es valido.
+        return False; //Usuario invalido.
     }
 
     /**
@@ -88,13 +94,15 @@ class Usuario extends Modelo {
      * @return boolena
      */
     function validarUsuario($conexion) {
-        try {
-            if($this->validarCorreo() && $this->validarNobreDeUsuario($conexion)); {
-            return True;
-        }
-        } catch (Exception $e) {
-            return $e;
-        }
+        return ($this->validarCorreo() && $this->validarNobreDeUsuario($conexion) && !empty($this->clave));
+    }
+
+    function buscarErrores($conexion){
+        $errores = '';
+        $errores .= $this->validarCorreo()? '': 'Dirección de correo invalida.</br>';
+        $errores .= $this->validarNobreDeUsuario($conexion)? '': 'Nombre de usuario invalido.</br>';
+        $errores .= empty ($this->clave)? '': 'Clave invalida.</br>';
+        return $errores;
     }
 
     /**
@@ -105,13 +113,13 @@ class Usuario extends Modelo {
      */
     function cambiarClave($claveNueva, $claveVieja = '') {
         if($this->validarClave($claveNueva)) {
-            if(($this->clave == '') || ($this->clave == sha1($claveVieja.CADENA_DE_SEGURIDAD))){
+            if(($this->clave == '') || ($this->clave == sha1($claveVieja.CADENA_DE_SEGURIDAD))) {
                 $this->clave = sha1($claveNueva.CADENA_DE_SEGURIDAD);
                 return $this;
             }
-            return new Exception('La clave anterior es incorrecta.', '');
+            return 'La clave anterior es incorrecta.';
         }
-        return new Exception('La nueva clave es invalida.', $code);
+        return 'La nueva clave es invalida.';
     }
 }
 ?>

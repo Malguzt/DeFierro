@@ -10,15 +10,12 @@ if(empty($_POST)) {
     if($clavesIguales) {
         $nuevoUsuario = new Usuario($_POST['usuario'], $_POST['clave'], $_POST['email']);
         if($nuevoUsuario->guardar($db)) {
-            echo 'Usuario guardado con exito';
-            ShowTemplate('index');
+            ShowTemplate('index', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
-            echo 'Error al guardar el usuario';
-            ShowTemplate('registro');
+            ShowTemplate('registro', array('mensajeError' => $nuevoUsuario->buscarErrores($db)));
         }
     }else {
-        echo 'Error al guardar el usuario';
-        ShowTemplate('registro');
+        ShowTemplate('registro', array('mensajeError' => 'Claves incompatibles.'));
     }
 }
 

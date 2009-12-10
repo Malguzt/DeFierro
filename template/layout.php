@@ -16,6 +16,10 @@
             </ul>
         </div>
         <div id="areaPrincipal">
+            <div id="mensajes">
+                <p id="errores"><?php echo $mensajeError?></p>
+                <p id="correctos"><?php echo $mensajeCorrecto?></p>
+            </div>
             <?php echo $tiny_content; ?>
         </div>
     </body>

@@ -97,3 +97,11 @@ div#menuIzquierdo a:hover{
 div#menuIzquierdo ul{
     margin:3px;
 }
+
+div#mensajes p#errores{
+    color: #ff0000;
+}
+
+div#mensajes p#correctos{
+    color: #00ff00;
+}
