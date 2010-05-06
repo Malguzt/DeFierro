@@ -7,18 +7,26 @@
         <link rel="STYLESHEET" type="text/css" href="template/estilo_general.css">
     </head>
     <body>
-        <div id="encabezado"><h1>De Fierro Online</h1></div>
+        <div id="encabezado">
+            <div id="usuario">
+            <?php if(isset($_COOKIE["NombreUsuario"])){
+                echo $_COOKIE["NombreUsuario"];
+            }
+            ?>
+            </div>
+            <h1>De Fierro Online</h1>
+        </div>
         <div id="menuIzquierdo">
             <ul>
-                <li><a href="login.php">Entrar</a></li>
+                <li><a href="acceso.php">Entrar</a></li>
                 <li><a href="registro.php">Registrarse</a></li>
                 <li><a href="personaje.php">Personaje</a></li>
             </ul>
         </div>
         <div id="areaPrincipal">
             <div id="mensajes">
-                <p id="errores"><?php echo $mensajeError?></p>
-                <p id="correctos"><?php echo $mensajeCorrecto?></p>
+                <p id="errores"><?php echo isset($mensajeError)? $mensajeError: '';?></p>
+                <p id="correctos"><?php echo isset($mensajeCorrecto)? $mensajeCorrecto: '';?></p>
             </div>
             <?php echo $tiny_content; ?>
         </div>

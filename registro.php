@@ -3,7 +3,7 @@ include 'libs/incluidor.php';
 include 'modelos/Usuario.php';
 
 if(empty($_POST)) {
-    ShowTemplate('registro');
+    ShowTemplate('registro_vista');
 } else {
 //Comprobando integridad del nombre de usuario.
     $clavesIguales = $_POST['clave'] == $_POST['clave2'];

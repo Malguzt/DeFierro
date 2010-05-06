@@ -9,6 +9,7 @@ class Usuario extends Modelo {
     private $usuario = '';
     private $clave = '';
     private $email = '';
+    private $personaje = '';
 
     /**
      * Constructor del modelo de usuario. Setea las variables con los valores pasados,
@@ -18,8 +19,7 @@ class Usuario extends Modelo {
      * @param string $email Correo electronico del usuario.
      * @author Lenscak José Francisco [Malguzt]
      */
-    public function __construct($usuario, $clave, $email = '') {
-        parent::__construct();
+    function __construct($usuario, $clave, $email = '') {
         $this->usuario = trim($usuario);
         $this->cambiarClave($clave);
         $this->email = $email;
@@ -34,9 +34,9 @@ class Usuario extends Modelo {
     function guardar($conexion) {
         if($this->validarUsuario($conexion)) {
             $instancia = array(
-                'usuario' => $this->usuario,
-                'clave' => $this->clave,
-                'email' => $this->email
+                    'usuario' => $this->usuario,
+                    'clave' => $this->clave,
+                    'email' => $this->email
             );
             return parent::guardar($instancia, $conexion);
         }
@@ -81,7 +81,7 @@ class Usuario extends Modelo {
      * @return boolena True si el correo es valido, False de lo contrario.
      */
     function validarCorreo() {
-    //La expreción regular se extiende mucho por tener la mayoria de terminaciones posibles.
+        //La expreción regular se extiende mucho por tener la mayoria de terminaciones posibles.
         if(($this->email == '') || ereg("^([^[:space:]]+)@(.+)\.(ad|ae|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gov|gd|ge|gf|gh|gi|gl|gm|gn|gp|gq |gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nato|nc|ne|net|biz|info|nf|ng|ni|nl|no|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$",$this->email)) {
             return True;
         }
@@ -97,7 +97,12 @@ class Usuario extends Modelo {
         return ($this->validarCorreo() && $this->validarNobreDeUsuario($conexion) && !empty($this->clave));
     }
 
-    function buscarErrores($conexion){
+    /**
+     * Realiza las pruebas pertinentes sobre los datos del usuario.
+     * @param PDO $conexion
+     * @return string Mensaje con los errores detectados.
+     */
+    function buscarErrores($conexion) {
         $errores = '';
         $errores .= $this->validarCorreo()? '': 'Dirección de correo invalida.</br>';
         $errores .= $this->validarNobreDeUsuario($conexion)? '': 'Nombre de usuario invalido.</br>';
@@ -120,6 +125,48 @@ class Usuario extends Modelo {
             return 'La clave anterior es incorrecta.';
         }
         return 'La nueva clave es invalida.';
+    }
+
+    /**
+     * Carga los datos del usuario desde la DB, tiene en cuenta el nombre de usuario
+     * y la clave.
+     * @param PDO $conexion
+     * @return boolean Verdadero si se pudo cargar el usuario.
+     */
+    function cargar($conexion) {
+        $sentencia = $conexion->prepare('
+            SELECT usuario, clave, id_personaje_principal
+            FROM usuario u
+            WHERE u.usuario LIKE ?
+            AND u.clave = ?');
+        $encontro = $sentencia->execute(array($this->usuario, $this->clave));
+        $usuario = $sentencia->fetch();
+        if(empty($usuario)){
+            return false;
+        } else {
+            $this->definirPJ($usuario['id_personaje_principal']);
+            return true;
+        }
+    }
+
+    /**
+     * Define el personaje con el que esta jugando el Usuario
+     * @param Personaje $personaje 
+     */
+    function definirPJ($personaje){
+        $this->personaje = $personaje;
+    }
+
+    function getNombre(){
+        return $this->usuario;
+    }
+
+    function getPJ(){
+        return $this->personaje;
+    }
+
+    function getClave(){
+        return $this->clave;
     }
 }
 ?>

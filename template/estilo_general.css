@@ -73,6 +73,15 @@ div#encabezado {
     padding: 10px;
 }
 
+div#usuario {
+    float: right;
+    font-style: normal;
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 12px;
+    clear: both;
+}
+
 div#menuIzquierdo {
     width: 20%;
     float: left;

@@ -1,5 +1,6 @@
 <?php
     include 'libs/incluidor.php';
+    include 'modelos/Usuario.php';
 
-    ShowTemplate('index');
+    ShowTemplate('index_vista');
 ?>
