@@ -1,2 +1,6 @@
-<p>Usuario: <?php echo $_COOKIE["NombreUsuario"]; ?></p>
-<p>Nro. PJ: <?php echo $_COOKIE['ClaveUsuario']; ?></p>
+<div id="secciones">
+    <div id="seccion1">
+        <a href="personaje.php"><p>Personaje</p>
+        <img src="imagenes/gaucho05.gif" alt="Personaje"/></a>
+    </div>
+</div>

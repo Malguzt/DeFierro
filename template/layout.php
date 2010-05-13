@@ -10,9 +10,9 @@
         <div id="encabezado">
             <div id="usuario">
             <?php if(isset($_COOKIE["NombreUsuario"])){
-                echo $_COOKIE["NombreUsuario"];
-            }
-            ?>
+                echo $_COOKIE["NombreUsuario"];?>
+                <a href="salir.php">Salir</a>
+            <?}?>
             </div>
             <h1>De Fierro Online</h1>
         </div>
@@ -20,7 +20,9 @@
             <ul>
                 <li><a href="acceso.php">Entrar</a></li>
                 <li><a href="registro.php">Registrarse</a></li>
+            <?php if(isset($_COOKIE["NombreUsuario"])){?>
                 <li><a href="personaje.php">Personaje</a></li>
+            <?}?>
             </ul>
         </div>
         <div id="areaPrincipal">

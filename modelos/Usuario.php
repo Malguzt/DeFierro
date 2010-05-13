@@ -135,16 +135,16 @@ class Usuario extends Modelo {
      */
     function cargar($conexion) {
         $sentencia = $conexion->prepare('
-            SELECT usuario, clave, id_personaje_principal
+            SELECT usuario, clave, id_personaje
             FROM usuario u
-            WHERE u.usuario LIKE ?
+            WHERE u.usuario = ?
             AND u.clave = ?');
         $encontro = $sentencia->execute(array($this->usuario, $this->clave));
         $usuario = $sentencia->fetch();
         if(empty($usuario)){
             return false;
         } else {
-            $this->definirPJ($usuario['id_personaje_principal']);
+            $this->definirPJ($usuario['id_personaje']);
             return true;
         }
     }
