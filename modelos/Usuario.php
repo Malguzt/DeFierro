@@ -19,26 +19,26 @@ class Usuario extends Modelo {
      * @param string $email Correo electronico del usuario.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function __construct($usuario, $clave, $email = '') {
+    function __construct($conexion, $usuario, $clave, $email = '') {
         $this->usuario = trim($usuario);
         $this->cambiarClave($clave);
         $this->email = $email;
         $this->tabla = 'usuario';
+        parent::__construct($conexion);
     }
 
     /**
      * Crea el registro de un nuevo usuario, validando previamente los campos de la instancia.
-     * @param PDO $conexion Objeto de conexión a la base de datos.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function guardar($conexion) {
-        if($this->validarUsuario($conexion)) {
+    function guardar() {
+        if($this->validarUsuario()) {
             $instancia = array(
                     'usuario' => $this->usuario,
                     'clave' => $this->clave,
                     'email' => $this->email
             );
-            return parent::guardar($instancia, $conexion);
+            return parent::guardar($instancia, $this->getConexion());
         }
         return False;
 
@@ -47,13 +47,12 @@ class Usuario extends Modelo {
     /**
      * Comprueva la valides del usuario. Si el usuario no es el string vacio y no existe
      * en la base de datos, entonces devuelve True, en otro caso devuelve False.
-     * @param PDO $conexion Objeto de conexión a la base de datos.
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
-    function validarNobreDeUsuario($conexion) {
+    function validarNobreDeUsuario() {
         if($this->usuario != '') {
-            $sentencia = $conexion->prepare('SELECT usuario FROM usuario WHERE usuario.usuario LIKE ?');
+            $sentencia = $this->getConexion()->prepare('SELECT usuario FROM usuario WHERE usuario.usuario LIKE ?');
             $sentencia->execute(array($this->usuario));
             $usuario = $sentencia->fetch();
             if(empty($usuario)) {
@@ -77,35 +76,20 @@ class Usuario extends Modelo {
     }
 
     /**
-     * Comprueba la valides del correo de la instancia.
-     * @return boolena True si el correo es valido, False de lo contrario.
-     */
-    function validarCorreo() {
-        //La expreción regular se extiende mucho por tener la mayoria de terminaciones posibles.
-        if(($this->email == '') || ereg("^([^[:space:]]+)@(.+)\.(ad|ae|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gov|gd|ge|gf|gh|gi|gl|gm|gn|gp|gq |gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nato|nc|ne|net|biz|info|nf|ng|ni|nl|no|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$",$this->email)) {
-            return True;
-        }
-        return False;
-    }
-
-    /**
      * Comprueba la valides de todos los campos del usuario.
-     * @param PDO $conexion Objeto de conexión a la base de datos.
      * @return boolena
      */
-    function validarUsuario($conexion) {
-        return ($this->validarCorreo() && $this->validarNobreDeUsuario($conexion) && !empty($this->clave));
+    function validarUsuario() {
+        return ($this->validarCorreo() && $this->validarNobreDeUsuario($this->getConexion()) && !empty($this->clave));
     }
 
     /**
      * Realiza las pruebas pertinentes sobre los datos del usuario.
-     * @param PDO $conexion
      * @return string Mensaje con los errores detectados.
      */
-    function buscarErrores($conexion) {
+    function buscarErrores() {
         $errores = '';
-        $errores .= $this->validarCorreo()? '': 'Dirección de correo invalida.</br>';
-        $errores .= $this->validarNobreDeUsuario($conexion)? '': 'Nombre de usuario invalido.</br>';
+        $errores .= $this->validarNobreDeUsuario($this->getConexion())? '': 'Nombre de usuario invalido.</br>';
         $errores .= empty ($this->clave)? '': 'Clave invalida.</br>';
         return $errores;
     }
@@ -130,11 +114,10 @@ class Usuario extends Modelo {
     /**
      * Carga los datos del usuario desde la DB, tiene en cuenta el nombre de usuario
      * y la clave.
-     * @param PDO $conexion
      * @return boolean Verdadero si se pudo cargar el usuario.
      */
-    function cargar($conexion) {
-        $sentencia = $conexion->prepare('
+    function cargar() {
+        $sentencia = $this->getConexion()->prepare('
             SELECT usuario, clave, id_personaje
             FROM usuario u
             WHERE u.usuario = ?
@@ -159,10 +142,6 @@ class Usuario extends Modelo {
 
     function getNombre(){
         return $this->usuario;
-    }
-
-    function getPJ(){
-        return $this->personaje;
     }
 
     function getClave(){

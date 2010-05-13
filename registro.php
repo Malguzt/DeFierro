@@ -8,11 +8,11 @@ if(empty($_POST)) {
 //Comprobando integridad del nombre de usuario.
     $clavesIguales = $_POST['clave'] == $_POST['clave2'];
     if($clavesIguales) {
-        $nuevoUsuario = new Usuario($_POST['usuario'], $_POST['clave'], $_POST['email']);
-        if($nuevoUsuario->guardar($db)) {
+        $nuevoUsuario = new Usuario($db, $_POST['usuario'], $_POST['clave'], $_POST['email']);
+        if($nuevoUsuario->guardar()) {
             ShowTemplate('index', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
-            ShowTemplate('registro', array('mensajeError' => $nuevoUsuario->buscarErrores($db)));
+            ShowTemplate('registro', array('mensajeError' => $nuevoUsuario->buscarErrores()));
         }
     }else {
         ShowTemplate('registro', array('mensajeError' => 'Claves incompatibles.'));

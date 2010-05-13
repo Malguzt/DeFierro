@@ -6,17 +6,24 @@
  */
 abstract class Modelo {
     protected $tabla;
+    protected $conexion;
 
-    public function __construct(){
-
+    public function __construct($conexion){
+        $this->setConexion($conexion);
     }
 
-    protected function guardar($arreglo, $conexion) {
+    function setConexion($conexion){
+        $this->conexion = $conexion;
+    }
+
+    function getConexion(){
+        return $this->conexion;
+    }
+
+    protected function guardar($arreglo) {
         $valores = array();
         $campos = '';
-        /**
-         * @internal Variable para almacenar la cantidad de signos de interrogación necesaria.
-         */
+        /** @internal Variable para almacenar la cantidad de signos de interrogación necesaria. */
         $signos = '';
         $separador = '';
         foreach ($arreglo as $campo => $valor) {
@@ -26,7 +33,7 @@ abstract class Modelo {
 
             array_push($valores, $valor);
         }
-        $sentencia = $conexion->prepare("INSERT INTO usuario ($campos) VALUES ($signos)");
+        $sentencia = $this->getConexion()->prepare("INSERT INTO $this->tabla ($campos) VALUES ($signos)");
         return $sentencia->execute($valores);
     }
 }
