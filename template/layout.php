@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>De Fierro Online</title>
 
-        <link rel="STYLESHEET" type="text/css" href="template/estilo_general.css">
+        <link rel="STYLESHEET" type="text/css" href="template/general_style.css">
     </head>
     <body>
         <div id="encabezado">
