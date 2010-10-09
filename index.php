@@ -1,9 +1,9 @@
 <?php
-    include 'libs/incluidor.php';
-    include 'modelos/Usuario.php';
-    if(isset($_COOKIE["NombreUsuario"])){
-        ShowTemplate('index_vista');
+    include 'libs/including.php';
+    include 'models/User.php';
+    if(isset($_COOKIE["UserName"])){
+        ShowTemplate('index_view');
     } else {
-        header("Location: acceso.php");
+        header("Location: acces.php");
     }
 ?>

@@ -1,5 +1,9 @@
 <?php
-include 'libs/incluidor.php';
+include 'libs/incluing.php';
 
-ShowTemplate("crear_personaje");
+if(empty($_POST)){
+    ShowTemplate("create_character");
+} else {
+
+}
 ?>

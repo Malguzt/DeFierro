@@ -1,11 +1,11 @@
 <?php
-include 'Modelo.php';
+include 'Model.php';
 /**
  * Modelo del usuario.
  *
  * @author Lenscak José Francisco [Malguzt]
  */
-class Usuario extends Modelo {
+class User extends Model {
     private $usuario = '';
     private $clave = '';
     private $email = '';

@@ -1,9 +1,10 @@
 <?php
-include 'Modelo.php';
-class Personaje extends Modelo {
-    private $id = 0;
+include 'Model.php';
+class Character extends Model {
+    private $id;
+    private $nombre = 'Juan Perez';
     private $fuerza = 0;
-    private $control_corporal = 0;
+    private $coordinacionl = 0;
     private $agilidad = 0;
     private $flexibilidad = 0;
     private $inteligencia = 0;
@@ -23,8 +24,36 @@ class Personaje extends Modelo {
     private $control_planos = 0;
     private $aguye = 0;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($conexion, $nombre, $atributos = array()) {
+        $this->fuerza = rand(20, 60);
+        $this->coordinacionl = rand(20, 60);
+        $this->agilidad = rand(20, 60);
+        $this->flexibilidad = rand(20, 60);
+        $this->inteligencia = rand(20, 60);
+        $this->conocimiento = rand(20, 60);
+        $this->memoria = rand(20, 60);
+        $this->concentracion = rand(20, 60);
+        $this->conviccion = rand(20, 60);
+        $this->fluidez = rand(20, 60);
+        $this->pinta = rand(20, 60);
+        $this->expresividad = rand(20, 60);
+        $this->oido = rand(20, 60);
+        $this->gusto_olfato = rand(20, 60);
+        $this->tacto = rand(20, 60);
+        $this->vista = rand(20, 60);
+        $this->control_materia = rand(20, 60);
+        $this->control_mental = rand(20, 60);
+        $this->control_planos = rand(20, 60);
+        $this->aguye = rand(20, 60);
+        parent::__construct($conexion);
     }
+
+    function describirPJ(){
+        return "Nombre: $this->nombre <br />
+                Fuerza: $this->fuerza <br />
+                Destrez: $this->destreza";
+    }
+
+
 }
 ?>
