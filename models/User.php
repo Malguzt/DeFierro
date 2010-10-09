@@ -1,15 +1,15 @@
 <?php
 include 'Model.php';
 /**
- * Modelo del usuario.
+ * User Model.
  *
  * @author Lenscak José Francisco [Malguzt]
  */
 class User extends Model {
-    private $usuario = '';
-    private $clave = '';
+    private $user = '';
+    private $pass = '';
     private $email = '';
-    private $personaje = '';
+    private $character = '';
 
     /**
      * Constructor del modelo de usuario. Setea las variables con los valores pasados,
@@ -19,29 +19,23 @@ class User extends Model {
      * @param string $email Correo electronico del usuario.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function __construct($conexion, $usuario, $clave, $email = '') {
-        $this->usuario = trim($usuario);
-        $this->cambiarClave($clave);
+    function __construct($db, $user, $pass, $email = '') {
+        $this->user = trim($user);
+        $this->changePass($pass);
         $this->email = $email;
-        $this->tabla = 'usuario';
-        parent::__construct($conexion);
+        $this->model = 'user';
+        parent::__construct($db);
     }
 
     /**
      * Crea el registro de un nuevo usuario, validando previamente los campos de la instancia.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function guardar() {
-        if($this->validarUsuario()) {
-            $instancia = array(
-                    'usuario' => $this->usuario,
-                    'clave' => $this->clave,
-                    'email' => $this->email
-            );
-            return parent::guardar($instancia, $this->getConexion());
+    function save() {
+        if($this->validateUser()) {
+            return parent::save();
         }
         return False;
-
     }
 
     /**
@@ -50,14 +44,11 @@ class User extends Model {
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
-    function validarNobreDeUsuario() {
-        if($this->usuario != '') {
-            $sentencia = $this->getConexion()->prepare('SELECT usuario FROM usuario WHERE usuario.usuario LIKE ?');
-            $sentencia->execute(array($this->usuario));
-            $usuario = $sentencia->fetch();
-            if(empty($usuario)) {
-                return True; //El usuario es valido.
-            }
+    function validateUserName() {
+        if($this->user != '') {
+            $filter = array('user' => $this->user);
+            $users = $this->collection->count($filter);
+            if($users == 0) return true;
         }
         return False; //Usuario invalido.
     }
@@ -79,8 +70,8 @@ class User extends Model {
      * Comprueba la valides de todos los campos del usuario.
      * @return boolena
      */
-    function validarUsuario() {
-        return ($this->validarCorreo() && $this->validarNobreDeUsuario($this->getConexion()) && !empty($this->clave));
+    function validateUser() {
+        return ($this->validateUserName() && !empty($this->pass));
     }
 
     /**
@@ -89,8 +80,8 @@ class User extends Model {
      */
     function buscarErrores() {
         $errores = '';
-        $errores .= $this->validarNobreDeUsuario($this->getConexion())? '': 'Nombre de usuario invalido.</br>';
-        $errores .= empty ($this->clave)? '': 'Clave invalida.</br>';
+        $errores .= $this->validateUserName()? '': 'Nombre de usuario invalido.</br>';
+        $errores .= empty ($this->pass)? '': 'Clave invalida.</br>';
         return $errores;
     }
 
@@ -100,10 +91,10 @@ class User extends Model {
      * @param string $claveVieja La clave anterior, para comprovar que se la conoce.
      * @return Exception Si todo sale bien se devuelve a si mismo, sino devuelve una excepción.
      */
-    function cambiarClave($claveNueva, $claveVieja = '') {
-        if($this->validarClave($claveNueva)) {
-            if(($this->clave == '') || ($this->clave == sha1($claveVieja.CADENA_DE_SEGURIDAD))) {
-                $this->clave = sha1($claveNueva.CADENA_DE_SEGURIDAD);
+    function changePass($newPass, $oldPass = '') {
+        if($this->validarClave($newPass)) {
+            if(($this->pass == '') || ($this->pass == sha1($oldPass.SECURITY_STRING))) {
+                $this->pass = sha1($newPass.SECURITY_STRING);
                 return $this;
             }
             return 'La clave anterior es incorrecta.';
@@ -122,7 +113,7 @@ class User extends Model {
             FROM usuario u
             WHERE u.usuario = ?
             AND u.clave = ?');
-        $encontro = $sentencia->execute(array($this->usuario, $this->clave));
+        $encontro = $sentencia->execute(array($this->usuario, $this->pass));
         $usuario = $sentencia->fetch();
         if(empty($usuario)){
             return false;
@@ -140,12 +131,12 @@ class User extends Model {
         $this->personaje = $personaje;
     }
 
-    function getNombre(){
-        return $this->usuario;
+    function getName(){
+        return $this->user;
     }
 
-    function getClave(){
-        return $this->clave;
+    function getPass(){
+        return $this->pass;
     }
 }
 ?>

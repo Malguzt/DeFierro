@@ -10,6 +10,7 @@ abstract class Model {
 
     protected $collection;
     protected $model = 'root';
+    protected $id;
 
     public function __construct($db) {
         $this->collection = $db->selectCollection($this->model);
@@ -19,6 +20,8 @@ abstract class Model {
         $safe_insert = true;
         $data = $this->toArray($this);
         $this->collection->insert($data, $safe_insert);
+        $this->id = $data['_id'];
+        return true;
     }
 
     function toArray($object) {

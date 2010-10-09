@@ -9,19 +9,19 @@
     <body>
         <div id="encabezado">
             <div id="usuario">
-            <?php if(isset($_COOKIE["NombreUsuario"])){
-                echo $_COOKIE["NombreUsuario"];?>
-                <a href="salir.php">Salir</a>
+            <?php if(isset($_COOKIE["UserName"])){
+                echo $_COOKIE["UserName"];?>
+                <a href="exit.php">Salir</a>
             <?}?>
             </div>
             <h1>De Fierro Online</h1>
         </div>
         <div id="menuIzquierdo">
             <ul>
-                <li><a href="acceso.php">Entrar</a></li>
-                <li><a href="registro.php">Registrarse</a></li>
-            <?php if(isset($_COOKIE["NombreUsuario"])){?>
-                <li><a href="personaje.php">Personaje</a></li>
+                <li><a href="acces.php">Entrar</a></li>
+                <li><a href="registration.php">Registrarse</a></li>
+            <?php if(isset($_COOKIE["UserName"])){?>
+                <li><a href="character.php">Personaje</a></li>
             <?}?>
             </ul>
         </div>
