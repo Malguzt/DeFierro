@@ -1,5 +1,5 @@
 <?php
-include 'Model.php';
+require_once 'Model.php';
 /**
  * User Model.
  *
@@ -154,6 +154,14 @@ class User extends Model {
      */
     function setEmail($email){
         $this->email = $email;
+    }
+
+    /**
+     * Return true if user has a characeter.
+     * @return boolean
+     */
+    function hasCharacter(){
+        return !empty ($this->character);
     }
 }
 ?>
