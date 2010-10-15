@@ -42,6 +42,11 @@ class DB{
         return $collection->find($filter);
     }
 
+    function findOne($model = 'default', $filter = array()){
+        $collection = $this->db->selectCollection($model);
+        return $collection->findOne($filter);
+    }
+
 }
 
 $db = new DB();

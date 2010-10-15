@@ -22,10 +22,7 @@ class User extends Model {
      * @param string $email User Email.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function __construct($db, $user, $pass, $email = '') {
-        $this->user = trim($user);
-        $this->changePass($pass);
-        $this->email = $email;
+    function __construct($db) {
         $this->model = 'user';
         parent::__construct($db);
     }
@@ -38,10 +35,11 @@ class User extends Model {
         $data['user'] = $this->user;
         $data['pass'] = $this->pass;
         $data['email'] = $this->email;
-        $this->character->save();
-        $data['character'] = $this->character->id;
+        if($this->hasCharacter()){
+            $this->character->save();
+            $data['character'] = $this->character->id;
+        }
         return parent::save($data);
-        return False;
     }
 
     /**
@@ -99,7 +97,7 @@ class User extends Model {
     function changePass($newPass, $oldPass = '') {
         if ($this->validatePass($newPass)) {
             if (($this->pass == '') || ($this->pass == sha1($oldPass . SECURITY_STRING))) {
-                $this->pass = sha1($newPass . SECURITY_STRING);
+                $this->setPass(sha1($newPass . SECURITY_STRING));
                 return $this;
             }
             return 'La clave anterior es incorrecta.';
@@ -116,12 +114,14 @@ class User extends Model {
             'user' => $this->user,
             'pass' => $this->pass
         );
-        $user = $this->db->find($this->model, $filter);
-        if (empty($user)) {
-            $this->setEmail($user['email']);
-            return false;
+        $user = $this->db->findOne($this->model, $filter);
+        if (!empty($user)) {
+                $this->setName($user['user']);
+                $this->setPass($user['pass']);
+                $this->setEmail($user['email']);
+                $this->setId($user['_id']);
         } else {
-            return true;
+            return false;
         }
     }
 
@@ -155,6 +155,14 @@ class User extends Model {
      */
     function setEmail($email) {
         $this->email = $email;
+    }
+
+    function setName($name) {
+        $this->user = trim($name);
+    }
+
+    function setPass($pass) {
+        $this->pass = $pass;
     }
 
     /**

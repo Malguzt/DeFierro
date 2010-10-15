@@ -8,7 +8,10 @@ if(empty($_POST)) {
 //Checking integrity of the username.
     $equalsKeys = $_POST['pass'] == $_POST['pass2'];
     if($equalsKeys) {
-        $newUser = new User($db, $_POST['user'], $_POST['pass'], $_POST['email']);
+        $newUser = new User($db);
+        $newUser->setName($_POST['user']);
+        $newUser->changePass($_POST['pass']);
+        $newUser->setEmail($_POST['email']);
         if($newUser->validateUser() && $newUser->save()) {
             ShowTemplate('index_view', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {

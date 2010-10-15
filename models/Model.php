@@ -19,11 +19,15 @@ abstract class Model {
     function save($data = array()) {
         if(!empty($this->id)) $data['__id'] = $this->id;
         try {
-            $this->id = $this->db->save($data, $this->model);
+            $this->setId($this->db->save($data, $this->model));
         } catch (MongoCursorException $e){
             return false;
         }
         return true;
+    }
+
+    function setId($id){
+        $this->id = $id;
     }
 
 }

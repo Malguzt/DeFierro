@@ -67,7 +67,6 @@ class Character extends Model {
         $data['name'] = $this->name;
         $data['attributes'] = $this->attributes;
         $data['aguye'] = $this->aguye;
-        echo 'gil';
         return parent::save($data);
     }
 
