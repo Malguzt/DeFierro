@@ -1,11 +1,14 @@
 <?php
+
 require_once 'Model.php';
+
 /**
  * User Model.
  *
  * @author Lenscak José Francisco [Malguzt]
  */
 class User extends Model {
+
     private $user = '';
     private $pass = '';
     private $email = '';
@@ -32,13 +35,12 @@ class User extends Model {
      * @author Lenscak José Francisco [Malguzt]
      */
     function save($data = array()) {
-        if($this->validateUser()) {
-            $data['user'] = $this->user;
-            $data['pass'] = $this->pass;
-            $data['email'] = $this->email;
-            //$this->character->save();
-            return parent::save($data);
-        }
+        $data['user'] = $this->user;
+        $data['pass'] = $this->pass;
+        $data['email'] = $this->email;
+        $this->character->save();
+        $data['character'] = $this->character->id;
+        return parent::save($data);
         return False;
     }
 
@@ -48,11 +50,10 @@ class User extends Model {
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
-    
     function validateUserName() {
-        if($this->user != '') {
+        if ($this->user != '') {
             $filter = array('user' => $this->user);
-            return !$this->db->exist($filter, $this->model);
+            return!$this->db->exist($filter, $this->model);
         }
         return False; //Invalid user
     }
@@ -64,7 +65,7 @@ class User extends Model {
      * @author Lenscak José Francisco [Malguzt]
      */
     function validatePass($pass) {
-        if(strlen($pass) < 3 || strlen($pass) > 30) {
+        if (strlen($pass) < 3 || strlen($pass) > 30) {
             return False;
         }
         return True;
@@ -84,8 +85,8 @@ class User extends Model {
      */
     function findErrors() {
         $errores = '';
-        $errores .= $this->validateUserName()? '': 'Nombre de usuario invalido.</br>';
-        $errores .= empty ($this->pass)? '': 'Clave invalida.</br>';
+        $errores .= $this->validateUserName() ? '' : 'Nombre de usuario invalido.</br>';
+        $errores .= empty($this->pass) ? '' : 'Clave invalida.</br>';
         return $errores;
     }
 
@@ -96,9 +97,9 @@ class User extends Model {
      * @return self If all goes well is returned to himself, else throws an error message.
      */
     function changePass($newPass, $oldPass = '') {
-        if($this->validatePass($newPass)) {
-            if(($this->pass == '') || ($this->pass == sha1($oldPass.SECURITY_STRING))) {
-                $this->pass = sha1($newPass.SECURITY_STRING);
+        if ($this->validatePass($newPass)) {
+            if (($this->pass == '') || ($this->pass == sha1($oldPass . SECURITY_STRING))) {
+                $this->pass = sha1($newPass . SECURITY_STRING);
                 return $this;
             }
             return 'La clave anterior es incorrecta.';
@@ -116,7 +117,7 @@ class User extends Model {
             'pass' => $this->pass
         );
         $user = $this->db->find($this->model, $filter);
-        if(empty($user)){
+        if (empty($user)) {
             $this->setEmail($user['email']);
             return false;
         } else {
@@ -128,7 +129,7 @@ class User extends Model {
      * Set the user's character.
      * @param Character $character
      */
-    function setCharacter($character){
+    function setCharacter($character) {
         $this->character = $character;
     }
 
@@ -136,7 +137,7 @@ class User extends Model {
      *
      * @return string
      */
-    function getName(){
+    function getName() {
         return $this->user;
     }
 
@@ -144,7 +145,7 @@ class User extends Model {
      *
      * @return string Password in md5.
      */
-    function getPass(){
+    function getPass() {
         return $this->pass;
     }
 
@@ -152,7 +153,7 @@ class User extends Model {
      *
      * @param string $email
      */
-    function setEmail($email){
+    function setEmail($email) {
         $this->email = $email;
     }
 
@@ -160,8 +161,10 @@ class User extends Model {
      * Return true if user has a characeter.
      * @return boolean
      */
-    function hasCharacter(){
-        return !empty ($this->character);
+    function hasCharacter() {
+        return!empty($this->character);
     }
+
 }
+
 ?>

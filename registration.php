@@ -9,7 +9,7 @@ if(empty($_POST)) {
     $equalsKeys = $_POST['pass'] == $_POST['pass2'];
     if($equalsKeys) {
         $newUser = new User($db, $_POST['user'], $_POST['pass'], $_POST['email']);
-        if($newUser->save()) {
+        if($newUser->validateUser() && $newUser->save()) {
             ShowTemplate('index_view', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
             ShowTemplate('registration_view', array('mensajeError' => $newUser->findErrors()));
