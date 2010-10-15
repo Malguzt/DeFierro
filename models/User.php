@@ -31,9 +31,13 @@ class User extends Model {
      * Crea el registro de un nuevo usuario, validando previamente los campos de la instancia.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function save() {
+    function save($data = array()) {
         if($this->validateUser()) {
-            return parent::save();
+            $data['user'] = $this->user;
+            $data['pass'] = $this->pass;
+            $data['email'] = $this->email;
+            //$this->character->save();
+            return parent::save($data);
         }
         return False;
     }
@@ -44,11 +48,12 @@ class User extends Model {
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
+    //TODO: the validateUserNeme() method thon work. Because the count method fails.
     function validateUserName() {
         if($this->user != '') {
             $filter = array('user' => $this->user);
-            $users = $this->collection->count($filter);
-            if($users == 0) return true;
+            return !$this->db->there($filter, $this->model);
+            //if($users == 0) return true;
         }
         return False; //Usuario invalido.
     }

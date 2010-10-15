@@ -8,31 +8,22 @@
  */
 abstract class Model {
 
-    protected $collection;
+    protected $db;
     protected $model = 'root';
     protected $id;
 
     public function __construct($db) {
-        $this->collection = $db->selectCollection($this->model);
+        $this->db = $db;
     }
-
-    function save() {
-        $safe_insert = true;
-        $data = $this->toArray($this);
-        $this->collection->insert($data, $safe_insert);
-        $this->id = $data['_id'];
-        return true;
-    }
-
-    function toArray($object) {
-        if (is_array($object) || is_object($object)) {
-            $array = array();
-            foreach ($object as $key => $value) {
-                $array[$key] = $this->toArray($value);
-            }
-            return $array;
+    //TODO: to work the save method
+    function save($data = array()) {
+        if(!empty($this->id)) $data['__id'] = $this->id;
+        try {
+            $this->id = $this->db->save($data, $this->model);
+        } catch (MongoCursorException $e){
+            return false;
         }
-        return $object;
+        return true;
     }
 
 }
