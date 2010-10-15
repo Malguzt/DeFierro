@@ -12,11 +12,11 @@ class User extends Model {
     private $character = '';
 
     /**
-     * Constructor del modelo de usuario. Setea las variables con los valores pasados,
-     * pero no hace ningun tipo de comprovación con ellos.
-     * @param string $usuario Nombre de usuario empleado para conectarse.
-     * @param string $clave Clave del usuario.
-     * @param string $email Correo electronico del usuario.
+     * Constructer for the User model. Sets the variables with the values passed,
+     * but does no checking.
+     * @param string $user User name used to conect.
+     * @param string $pass User password.
+     * @param string $email User Email.
      * @author Lenscak José Francisco [Malguzt]
      */
     function __construct($db, $user, $pass, $email = '') {
@@ -28,7 +28,7 @@ class User extends Model {
     }
 
     /**
-     * Crea el registro de un nuevo usuario, validando previamente los campos de la instancia.
+     * Save the user, previously validated the instance fields.
      * @author Lenscak José Francisco [Malguzt]
      */
     function save($data = array()) {
@@ -43,8 +43,8 @@ class User extends Model {
     }
 
     /**
-     * Comprueva la valides del usuario. Si el usuario no es el string vacio y no existe
-     * en la base de datos, entonces devuelve True, en otro caso devuelve False.
+     * Check the user validity. If the user isn't the empty string and doesn't
+     * exist in the datebase, then return true, otherwise it returns false.
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
@@ -53,26 +53,25 @@ class User extends Model {
         if($this->user != '') {
             $filter = array('user' => $this->user);
             return !$this->db->exist($filter, $this->model);
-            //if($users == 0) return true;
         }
-        return False; //Usuario invalido.
+        return False; //Invalid user
     }
 
     /**
-     * Comprueba la valides de la clave pasada por parametro.
-     * @param $clave Clave a evaluar.
-     * @return boolena Devuelve la valides o no de la clave.
+     * Chech the validity of the password passed by parameter.
+     * @param $pass Password to validate.
+     * @return boolena Return the password validity.
      * @author Lenscak José Francisco [Malguzt]
      */
-    function validarClave($clave) {
-        if(strlen($clave) < 3 || strlen($clave) > 30) {
+    function validatePass($pass) {
+        if(strlen($pass) < 3 || strlen($pass) > 30) {
             return False;
         }
         return True;
     }
 
     /**
-     * Comprueba la valides de todos los campos del usuario.
+     * Check the validity of all user fields.
      * @return boolena
      */
     function validateUser() {
@@ -80,10 +79,10 @@ class User extends Model {
     }
 
     /**
-     * Realiza las pruebas pertinentes sobre los datos del usuario.
-     * @return string Mensaje con los errores detectados.
+     * Do the relevant tests on the user's data.
+     * @return string Message with the identified errors.
      */
-    function buscarErrores() {
+    function findErrors() {
         $errores = '';
         $errores .= $this->validateUserName()? '': 'Nombre de usuario invalido.</br>';
         $errores .= empty ($this->pass)? '': 'Clave invalida.</br>';
@@ -91,13 +90,13 @@ class User extends Model {
     }
 
     /**
-     * Cambia la clave actual del objeto por una nueva.
-     * @param string $claveNueva La clave que se decea introducir.
-     * @param string $claveVieja La clave anterior, para comprovar que se la conoce.
-     * @return Exception Si todo sale bien se devuelve a si mismo, sino devuelve una excepción.
+     * Change the object's current password for a new one.
+     * @param string $newPass The password you want to enter.
+     * @param string $oldPass The old password, to verify that it is known.
+     * @return self If all goes well is returned to himself, else throws an error message.
      */
     function changePass($newPass, $oldPass = '') {
-        if($this->validarClave($newPass)) {
+        if($this->validatePass($newPass)) {
             if(($this->pass == '') || ($this->pass == sha1($oldPass.SECURITY_STRING))) {
                 $this->pass = sha1($newPass.SECURITY_STRING);
                 return $this;
@@ -108,11 +107,10 @@ class User extends Model {
     }
 
     /**
-     * Carga los datos del usuario desde la DB, tiene en cuenta el nombre de usuario
-     * y la clave.
-     * @return boolean Verdadero si se pudo cargar el usuario.
+     * Load user data from the DB, using user name and password for the search.
+     * @return boolean True if could load the user.
      */
-    function cargar() {
+    function load() {
         $sentencia = $this->getConexion()->prepare('
             SELECT usuario, clave, id_personaje
             FROM usuario u
@@ -123,23 +121,31 @@ class User extends Model {
         if(empty($usuario)){
             return false;
         } else {
-            $this->definirPJ($usuario['id_personaje']);
+            $this->setCharacter($usuario['id_personaje']);
             return true;
         }
     }
 
     /**
-     * Define el personaje con el que esta jugando el Usuario
-     * @param Personaje $personaje 
+     * Set the user's character.
+     * @param Character $character
      */
-    function definirPJ($personaje){
-        $this->personaje = $personaje;
+    function setCharacter($character){
+        $this->character = $character;
     }
 
+    /**
+     *
+     * @return string
+     */
     function getName(){
         return $this->user;
     }
 
+    /**
+     *
+     * @return string Password in md5.
+     */
     function getPass(){
         return $this->pass;
     }

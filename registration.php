@@ -12,7 +12,7 @@ if(empty($_POST)) {
         if($newUser->save()) {
             ShowTemplate('index_view', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
-            ShowTemplate('registration_view', array('mensajeError' => $newUser->buscarErrores()));
+            ShowTemplate('registration_view', array('mensajeError' => $newUser->findErrors()));
         }
     }else {
         ShowTemplate('registration_view', array('mensajeError' => 'Claves incompatibles.'));
