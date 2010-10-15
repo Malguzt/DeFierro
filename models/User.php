@@ -48,11 +48,11 @@ class User extends Model {
      * @return boolean
      * @author Lenscak José Francisco [Malguzt]
      */
-    //TODO: the validateUserNeme() method thon work. Because the count method fails.
+    
     function validateUserName() {
         if($this->user != '') {
             $filter = array('user' => $this->user);
-            return !$this->db->there($filter, $this->model);
+            return !$this->db->exist($filter, $this->model);
             //if($users == 0) return true;
         }
         return False; //Usuario invalido.

@@ -6,7 +6,7 @@ class DB{
 
     function __construct() {
         $connection = new Mongo();
-        $this->db = $connection->selectDB('DeFierro');
+        $this->db = $connection->selectDB('defierro');
         return $this;
     }
 
@@ -16,10 +16,10 @@ class DB{
         return $data['_id'];
     }
 
-    function save($array, $model = 'default', $safe_insert = true){
+    function save($array, $model = 'default', $options = array('safe' => true)){
         $collection = $this->db->selectCollection($model);
-        $collection->save($array, $safe_insert);
-        return $data['_id'];
+        $collection->save($array, $options);
+        return $array['_id'];
     }
 
     function update($filter, $new_document, $model = 'default', $options = array()){
@@ -31,12 +31,10 @@ class DB{
                     $options
             );
     }
-    //TODO: to work the count and ther methods
-    function there($filter, $model = 'default'){
-        $c = $this->find($model, $filter);
-        var_dump($c);
-        //return count($c) <> 0;
-        return true;
+    
+    function exist($filter, $model = 'default'){
+        $collection = $this->db->selectCollection($model);
+        return $collection->count($filter) <> 0;
     }
 
     function find($model = 'default', $filter = array()){

@@ -15,7 +15,7 @@ abstract class Model {
     public function __construct($db) {
         $this->db = $db;
     }
-    //TODO: to work the save method
+    
     function save($data = array()) {
         if(!empty($this->id)) $data['__id'] = $this->id;
         try {
