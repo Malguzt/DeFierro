@@ -111,17 +111,15 @@ class User extends Model {
      * @return boolean True if could load the user.
      */
     function load() {
-        $sentencia = $this->getConexion()->prepare('
-            SELECT usuario, clave, id_personaje
-            FROM usuario u
-            WHERE u.usuario = ?
-            AND u.clave = ?');
-        $encontro = $sentencia->execute(array($this->usuario, $this->pass));
-        $usuario = $sentencia->fetch();
-        if(empty($usuario)){
+        $filter = array(
+            'user' => $this->user,
+            'pass' => $this->pass
+        );
+        $user = $this->db->find($this->model, $filter);
+        if(empty($user)){
+            $this->setEmail($user['email']);
             return false;
         } else {
-            $this->setCharacter($usuario['id_personaje']);
             return true;
         }
     }
@@ -148,6 +146,14 @@ class User extends Model {
      */
     function getPass(){
         return $this->pass;
+    }
+
+    /**
+     *
+     * @param string $email
+     */
+    function setEmail($email){
+        $this->email = $email;
     }
 }
 ?>

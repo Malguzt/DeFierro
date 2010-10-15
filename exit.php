@@ -1,5 +1,5 @@
 <?php
-    setcookie('NombreUsuario', null, time());
-    setcookie('ClaveUsuario', null, time());
+    setcookie('UserName', null, time());
+    setcookie('UserPass', null, time());
     header("Location: index.php");
 ?>

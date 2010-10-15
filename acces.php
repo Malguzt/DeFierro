@@ -5,11 +5,11 @@ include 'models/User.php';
 if(empty($_POST)) {
     ShowTemplate('acces_view');
 } else {
-    //Comprobando integridad del nombre de usuario.
-    $elUsuario = new Usuario($db, $_POST['usuario'], $_POST['clave']);
-    if($elUsuario->load()) {
-        setcookie("NombreUsuario", $elUsuario->getNombre(), time()+7776000);
-        setcookie("ClaveUsuario", $elUsuario->getClave(), time()+7776000);
+    //Checking integrity of the user name.
+    $user = new User($db, $_POST['user'], $_POST['pass']);
+    if($user->load()) {
+        setcookie("UserName", $user->getName(), time()+7776000);
+        setcookie("UserPass", $user->getPass(), time()+7776000);
         header("Location: index.php");
     } else {
         ShowTemplate('acces_view');
