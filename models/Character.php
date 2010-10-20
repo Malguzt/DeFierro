@@ -29,13 +29,17 @@ class Character extends Model {
     protected $model = 'character';
 
     public function __construct($db, $name, $attributes = array()) {
+        /* Generating random values for attributes. */
         foreach (Character::listAttributes() as $attribute) {
             $this->attributes[$attribute] = rand(20, 60);
         }
 
+        /* Generating random values for the preferred attributes. */
         foreach ($attributes as $index => $attribute) {
             $this->attributes[$attribute] = rand(60 - $index * 10, 100 - $index * 10);
         }
+
+        $this->setName($name);
 
         $this->aguye = rand(0, 10);
         parent::__construct($db);
@@ -68,6 +72,10 @@ class Character extends Model {
         $data['attributes'] = $this->attributes;
         $data['aguye'] = $this->aguye;
         return parent::save($data);
+    }
+
+    function setName($name){
+        $this->name = $name;
     }
 
 }

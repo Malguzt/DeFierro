@@ -36,8 +36,7 @@ class User extends Model {
         $data['pass'] = $this->pass;
         $data['email'] = $this->email;
         if($this->hasCharacter()){
-            $this->character->save();
-            $data['character'] = $this->character->id;
+            $data['character'] = $this->character->save();
         }
         return parent::save($data);
     }
@@ -120,7 +119,7 @@ class User extends Model {
                 $this->setPass($user['pass']);
                 $this->setEmail($user['email']);
                 $this->setId($user['_id']);
-                return ture;
+                return TRUE;
         }
         return false;
     }
