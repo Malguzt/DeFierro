@@ -100,9 +100,9 @@ class User extends Model {
                 $this->setPass(sha1($newPass . SECURITY_STRING));
                 return $this;
             }
-            return 'La clave anterior es incorrecta.';
+            throw new Exception('La clave anterior es incorrecta');
         }
-        return 'La nueva clave es invalida.';
+        throw new Exception('La nueva clave es invalida.');
     }
 
     /**
@@ -120,9 +120,9 @@ class User extends Model {
                 $this->setPass($user['pass']);
                 $this->setEmail($user['email']);
                 $this->setId($user['_id']);
-        } else {
-            return false;
+                return ture;
         }
+        return false;
     }
 
     /**
