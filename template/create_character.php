@@ -1,4 +1,3 @@
-<?php //$atributos = array('Aguye', 'Fuerza', 'Control_corporal', 'Agilidad', 'Flexibilidad', 'Inteligencia', 'Conocimiento', 'Memoria','Consentración', 'Convicción', 'Fluidez', 'Pinta', 'Expresividad', 'Oido', 'Gusto/Olfato', 'Tacto', 'Vista');?>
 <p>Bienvenido paisano, todos sabemos que tu mundo es un lugar injusto, y por estos pagos no hay diferente. Así que elige cuales son tus habilidades preferidas y rezale a tata-dios para que te de lo mejor de ellas.</p>
 <form name="createCharaceter" action="character.php" method="POST">
     <p>

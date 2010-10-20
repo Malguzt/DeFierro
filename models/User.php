@@ -119,6 +119,8 @@ class User extends Model {
                 $this->setPass($user['pass']);
                 $this->setEmail($user['email']);
                 $this->setId($user['_id']);
+                $this->setCharacter(new Character($this->db));
+                $this->getCharacter()->setId($user['character'])->load();
                 return TRUE;
         }
         return false;
@@ -156,10 +158,18 @@ class User extends Model {
         $this->email = $email;
     }
 
+    /**
+     *
+     * @param string $name
+     */
     function setName($name) {
         $this->user = trim($name);
     }
 
+    /**
+     *
+     * @param string $pass
+     */
     function setPass($pass) {
         $this->pass = $pass;
     }
@@ -169,7 +179,15 @@ class User extends Model {
      * @return boolean
      */
     function hasCharacter() {
-        return!empty($this->character);
+        return !empty($this->character);
+    }
+
+    /**
+     *
+     * @return Character
+     */
+    function getCharacter(){
+        return $this->character;
     }
 
 }

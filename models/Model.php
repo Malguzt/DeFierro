@@ -23,11 +23,12 @@ abstract class Model {
     }
 
     /**
-     *
      * @param object id $id
+     * @return Model
      */
     function setId($id){
         $this->id = $id;
+        return $this;
     }
 
     /**
