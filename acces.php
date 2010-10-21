@@ -3,7 +3,7 @@ include 'libs/including.php';
 include 'models/User.php';
 
 if(empty($_POST)) {
-    ShowTemplate('acces_view');
+    ShowTemplate('user/acces');
 } else {
     //Checking integrity of the user name.
     $user = new User($db);
@@ -14,7 +14,7 @@ if(empty($_POST)) {
         setcookie("UserPass", $user->getPass(), time()+7776000);
         header("Location: index.php");
     } else {
-        ShowTemplate('acces_view');
+        ShowTemplate('user/acces');
     }
 }
 ?>

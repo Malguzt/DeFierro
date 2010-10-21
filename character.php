@@ -8,10 +8,10 @@ $user->setName($_COOKIE['UserName']);
 $user->setPass($_COOKIE['UserPass']);
 $user->load();
 if ($user->hasCharacter()) {
-    ShowTemplate('character_view', array('description' => $user->getCharacter()->getDescription()));
+    ShowTemplate('character/show', array('description' => $user->getCharacter()->getDescription()));
 } else {
     if (empty($_POST)) {
-        ShowTemplate("create_character", array('attributes' => Character::listAttributes()));
+        ShowTemplate("character/create", array('attributes' => Character::listAttributes()));
     } else {
         $attributes = array();
         for ($i = 0; $i < 5; $i++) {
@@ -24,7 +24,7 @@ if ($user->hasCharacter()) {
         $newCharacter->generateAguye();
         $user->setCharacter($newCharacter);
         $user->save();
-        ShowTemplate('character_view',  array('description' => $user->getCharacter()->getDescription()));
+        ShowTemplate('character/show',  array('description' => $user->getCharacter()->getDescription()));
     }
 }
 ?>

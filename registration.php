@@ -3,7 +3,7 @@ include 'libs/including.php';
 include 'models/User.php';
 
 if(empty($_POST)) {
-    ShowTemplate('registration_view');
+    ShowTemplate('user/registration');
 } else {
 //Checking integrity of the username.
     $equalsKeys = $_POST['pass'] == $_POST['pass2'];
@@ -15,10 +15,10 @@ if(empty($_POST)) {
         if($newUser->validateUser() && $newUser->save()) {
             ShowTemplate('index_view', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
-            ShowTemplate('registration_view', array('mensajeError' => $newUser->findErrors()));
+            ShowTemplate('user/registration', array('mensajeError' => $newUser->findErrors()));
         }
     }else {
-        ShowTemplate('registration_view', array('mensajeError' => 'Claves incompatibles.'));
+        ShowTemplate('user/registration', array('mensajeError' => 'Claves incompatibles.'));
     }
 }
 
