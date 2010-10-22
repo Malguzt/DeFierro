@@ -2,7 +2,6 @@
 
 require_once 'Model.php';
 require 'Character.php';
-//TODO: Fix the require Character.php
 
 /**
  * User Model.
