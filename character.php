@@ -2,7 +2,6 @@
 
 require 'libs/including.php';
 require 'models/User.php';
-require 'models/Character.php';
 $user = new User($db);
 $user->setName($_COOKIE['UserName']);
 $user->setPass($_COOKIE['UserPass']);
