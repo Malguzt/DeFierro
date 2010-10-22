@@ -131,3 +131,13 @@ form p{
 form p input{
     float: right;
 }
+
+div.percentage{
+    width: 95%;
+    height: 20px;
+}
+
+div.percentageBox{
+    float: left;
+    width: 30%;
+}

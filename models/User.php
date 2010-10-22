@@ -120,8 +120,10 @@ class User extends Model {
                 $this->setPass($user['pass']);
                 $this->setEmail($user['email']);
                 $this->setId($user['_id']);
-                $this->setCharacter(new Character($this->db));
-                $this->getCharacter()->setId($user['character'])->load();
+                if(isset ($user['character'])) {
+                    $this->setCharacter(new Character($this->db));
+                    $this->getCharacter()->setId($user['character'])->load();
+                }
                 return TRUE;
         }
         return false;
