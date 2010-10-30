@@ -13,6 +13,8 @@ if(empty($_POST)) {
         $newUser->changePass($_POST['pass']);
         $newUser->setEmail($_POST['email']);
         if($newUser->validateUser() && $newUser->save()) {
+            setcookie("UserName", $newUser->getName(), time()+7776000);
+            setcookie("UserPass", $newUser->getPass(), time()+7776000);
             ShowTemplate('index_view', array('mensajeCorrecto' => 'Usuario guardado con exito'));
         } else {
             ShowTemplate('user/registration', array('mensajeError' => $newUser->findErrors()));
