@@ -16,16 +16,7 @@
             </div>
             <h1>De Fierro Online</h1>
         </div>
-        <div id="menuIzquierdo">
-            <ul>
-                <li><a href="acces.php">Entrar</a></li>
-                <li><a href="registration.php">Registrarse</a></li>
-            <?php if(isset($_COOKIE["UserName"])){?>
-                <li><a href="character.php">Personaje</a></li>
-            <?}?>
-            </ul>
-        </div>
-        <div id="areaPrincipal">
+        <div id="mainArea">
             <div id="mensajes">
                 <p id="errores"><?php echo isset($mensajeError)? $mensajeError: '';?></p>
                 <p id="correctos"><?php echo isset($mensajeCorrecto)? $mensajeCorrecto: '';?></p>

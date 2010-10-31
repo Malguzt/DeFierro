@@ -24,7 +24,7 @@ function showPercentage($name, $value) {
 ?>
     <div class="percentageBox"><?php echo $name; ?>
         <div class="percentage">
-            <div style="background-color: rgb(<?php echo $red ?>,<?php echo $green ?>,0); width: <?php echo $value ?>%"><?php echo $text ?></div>
+            <div class="levelBar" style="<?php echo $green ?>,0); width: <?php echo $value ?>%"><?php echo $text ?></div>
         </div>
     </div>
 <?php }

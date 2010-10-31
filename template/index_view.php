@@ -1,6 +1,5 @@
 <div id="secciones">
-    <div id="seccion1">
-        <a href="character.php"><p>Personaje</p>
-            <img src="images/gaucho05.gif" alt="Personaje"/></a>
+    <div id="character">
+        <a href="character.php"><img src="images/gaucho02.png" alt="Personaje"/></a>
     </div>
 </div>
