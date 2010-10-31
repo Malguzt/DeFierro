@@ -55,10 +55,14 @@ q:before, q:after {
 blockquote, q {
 	quotes: "" "";
 }
-/* Fin del Reset, modificar solo de aca para abajo ************************/
+/* End of Reset, don't changue up this line. ************************/
 
 root { 
     display: block;
+}
+
+body{
+    background: url('../images/argentina_back_flag.jpg') scroll no-repeat 0 0 black;
 }
 
 p {
@@ -66,7 +70,7 @@ p {
 }
 
 div#encabezado {
-    background-color: #6666ff;
+    /*background-color: #6666ff;*/
     font-style: italic;
     font-weight: bold;
     color: #ffffff;
@@ -89,7 +93,7 @@ div#usuario {
 div#menuIzquierdo {
     width: 20%;
     float: left;
-    background-color: #6666ff;
+    /*background-color: #6666ff;*/
 }
 
 div#areaPrincipal {
