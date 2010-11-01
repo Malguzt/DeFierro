@@ -5,8 +5,6 @@ function showPercentage($name, $value) {
 
     $value = ($value >= 100) ? 100 : $value;
     $value = ($value <= 0) ? 0 : $value;
-    $red = 256 - ($value * intval(256 / 100));
-    $green = $value * intval(256 / 100);
 
     if ($value <= 20) {
         $text = 'Inutil';
@@ -24,12 +22,13 @@ function showPercentage($name, $value) {
 ?>
     <div class="percentageBox"><?php echo $name; ?>
         <div class="percentage">
-            <div class="levelBar" style="<?php echo $green ?>,0); width: <?php echo $value ?>%"><?php echo $text ?></div>
+            <div class="levelBar" style="width: <?php echo $value ?>%"><?php echo $text ?></div>
         </div>
     </div>
 <?php }
 
  ?>
+<div id="playerCharacter">
 <div>
     <h2> <?php echo $description['name'] ?></h2>
 </div>
@@ -38,3 +37,4 @@ foreach ($description['attributes'] as $attribute => $value) {
     showPercentage($attribute, $value);
 }
 ?>
+</div>

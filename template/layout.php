@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
+    	<script  src="libs/jquery.js" type="text/javascript"></script>
+		<script src="javascript/main.js" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>De Fierro Online</title>
 
@@ -22,6 +24,8 @@
                 <p id="correctos"><?php echo isset($mensajeCorrecto)? $mensajeCorrecto: '';?></p>
             </div>
             <?php echo $tiny_content; ?>
+            <div id="loadArea">
+            </div>
         </div>
     </body>
 </html>

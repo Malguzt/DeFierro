@@ -161,3 +161,11 @@ div#character{
     left: 600px;
     top: 370px;
 }
+
+div#loadArea{
+	position: relative;
+    left: -100px;
+    top: -130px;
+    width: 700px;
+	height: 600px;
+}
