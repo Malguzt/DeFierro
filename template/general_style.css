@@ -63,6 +63,7 @@ root {
 
 body{
     background: url('../images/argentina_back_flag.jpg') scroll no-repeat 0 0 black;
+    color: white;
 }
 
 p {
@@ -138,8 +139,9 @@ form p input{
 }
 
 div.percentage{
-    width: 95%;
-    height: 20px;
+    background: url('../images/levelBar01.png') scroll no-repeat 0 0 black;
+    width: 150px;
+    height: 30px;
 }
 
 div.percentageBox{
@@ -149,9 +151,9 @@ div.percentageBox{
 }
 
 div.levelBar{
-    background: url('../images/levelBar.png') scroll no-repeat 0 0 black;
-    font-weight: 900;
-    color: black;
+    background: url('../images/levelBar02.png') scroll no-repeat 0 0 black;
+    padding-top: 8px;
+    padding-left: 5px;
 }
 
 div#character{
