@@ -5,16 +5,26 @@ $(document).ready(function(){
  });
 
 function repaint(){
-	$("#loadArea").height($(window).height() - 60);
-	$("#loadArea").width($(window).width() - 20);
-	$("#loadArea").offset({top: 60, left: 20});
+	$("#mainArea").height($(window).height() - 60);
+	$("#mainArea").width($(window).width() - 20);
+	$("#mainArea").offset({top: 60, left: 20});
 	gauchoRepaint();
+	characterRepaint();
 }
 
 function gauchoRepaint(){
-	$("#gaucho").offset({top: $(window).height() - 130, left: $(window).width() - 100});
+	$("#gaucho").offset({top: $(window).height() - 140, left: $(window).width() - 100});
+}
+
+function characterRepaint(){
+	$("#character").height($("#mainArea").height() - 200);
+	$("#character").width($("#mainArea").width() - 110);
+	$("#character").offset({top: 60, left: 110});
 }
 
 function loadCharacter(){
-  $('#loadArea').load("character/show.php #playerCharacter");
+  $('#character').remove();
+  $('#gaucho').after('<div id="character"></div>');
+  $('#character').load("character/show.php #playerCharacter");
+  repaint();
 }

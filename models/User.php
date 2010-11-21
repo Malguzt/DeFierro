@@ -1,7 +1,8 @@
 <?php
 
 require_once 'Model.php';
-require 'Character.php';
+//require 'Character.php';
+
 
 /**
  * User Model.
@@ -27,7 +28,7 @@ class User extends Model {
         $this->model = 'user';
         parent::__construct($db);
     }
-
+	
     /**
      * Save the user, previously validated the instance fields.
      * @author Lenscak José Francisco [Malguzt]

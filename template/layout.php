@@ -23,9 +23,7 @@
                 <p id="errores"><?php echo isset($mensajeError)? $mensajeError: '';?></p>
                 <p id="correctos"><?php echo isset($mensajeCorrecto)? $mensajeCorrecto: '';?></p>
             </div>
-            <div id="loadArea">
             <?php echo $tiny_content; ?>
-            </div>
         </div>
     </body>
 </html>
