@@ -167,11 +167,15 @@ div#gaucho{
 }
 
 div#accesDiv{
-	margin: auto;
-	margin-top: 100px;
-	width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  width: 300px;
 }
 
 div#character{
-	background-color: black;
+  background-color: black;
+}
+
+div.Box{
+  background-color: blue;
 }

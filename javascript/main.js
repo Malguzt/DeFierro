@@ -2,6 +2,8 @@ $(document).ready(function(){
   $("#gaucho").click(loadCharacter);
   $(window).resize(repaint);
   repaint();
+  var myBox = new Box(100, 100, 20, 20);
+  myBox.loader('../saludo.html'); //TODO: make wor this.
  });
 
 function repaint(){
